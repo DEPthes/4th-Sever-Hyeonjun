@@ -1,7 +1,14 @@
 package hello.hello_spring.domain;
 
+
+import jakarta.persistence.*;
+
+@Entity
 public class Member {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "NAME", length = 255)
     private String name;
 
     public Long getId() {
