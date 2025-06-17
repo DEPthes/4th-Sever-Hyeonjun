@@ -1,25 +1,36 @@
 package org.example;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 //@Table(name="USER")
 public class Member2 {
 
     @Id
+    @Column(name = "MEMBER_ID")
     private Long id;
-    //@Column(name="username")
     private String name;
 
-    public String getName() {
-        return name;
+    @OneToMany(mappedBy = "member")
+    private List<Board> boards = new ArrayList<>();
+
+    public Member2(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Member2() {
+
+    }
+
+    public List<Board> getBoards() {
+        return boards;
+    }
+
+    public void setBoards(List<Board> boards) {
+        this.boards = boards;
     }
 
     public Long getId() {
@@ -28,5 +39,13 @@ public class Member2 {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

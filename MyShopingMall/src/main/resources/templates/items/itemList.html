@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 관리</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <header class="mb-4">
+        <h1>My Shopping Mall</h1>
+        <hr>
+    </header>
+
+    <div>
+        <a th:href="@{/items/new}" class="btn btn-primary mb-2">상품 등록</a>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>재고수량</th>
+                <th>타입</th>
+                <th>상세정보</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.stockQuantity}"></td>
+                <!-- DTYPE 표시 방식 변경 -->
+                <td th:text="${item.dtype == 'B' ? '도서' :
+                              (item.dtype == 'M' ? '영화' : '앨범')}"></td>
+                <td>
+                    <!-- Book 전용 필드 (소문자 dtype 사용) -->
+                    <div th:if="${item.dtype == 'B'}">
+                        저자: <span th:text="${item.author}"></span><br>
+                        ISBN: <span th:text="${item.isbn}"></span>
+                    </div>
+                    <!-- Movie 전용 필드 -->
+                    <div th:if="${item.dtype == 'M'}">
+                        감독: <span th:text="${item.director}"></span><br>
+                        배우: <span th:text="${item.actor}"></span>
+                    </div>
+                    <!-- Album 전용 필드 -->
+                    <div th:if="${item.dtype == 'A'}">
+                        아티스트: <span th:text="${item.artist}"></span><br>
+                        기타: <span th:text="${item.etc}"></span>
+                    </div>
+                </td>
+                <td>
+                    <a th:href="@{/items/{id}/edit(id=${item.id})}"
+                       class="btn btn-primary btn-sm">수정</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="mt-4">
+        <hr>
+        <p>&copy; 2025 My Shopping Mall</p>
+    </footer>
+</div>
+</body>
+</html>
